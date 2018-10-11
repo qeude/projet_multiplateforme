@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 import 'models/session.dart';
+import 'sessiondetailspage.dart';
 
 Future<List<dynamic>> fetchPosts(http.Client client) async {
   final response = await client
@@ -59,6 +60,10 @@ class ListViewSessions extends StatelessWidget {
                 ListTile(
                   title: Text('${sessions[index].title}'),
                   trailing: Icon(Icons.keyboard_arrow_right),
+                  onTap: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SessionDetailsPage(sessions[index])));
+                  },
                 ),
                 Divider(),
               ],
