@@ -6,31 +6,33 @@ import 'package:flutter/foundation.dart';
 
 import 'models/session.dart';
 
-
-Future<List<Session>> fetchPosts(http.Client client) async {
-  final response = await client.get('https://devfest-nantes-2018-api.cleverapps.io/sessions');
+Future<List<dynamic>> fetchPosts(http.Client client) async {
+  final response = await client
+      .get('https://devfest-nantes-2018-api.cleverapps.io/sessions');
   return compute(parsePosts, response.body);
 }
- 
-List<Session> parsePosts(String responseBody) {
-  final parsed = json.decode(responseBody);
-  parsed.map((key, value) => print(value));
-  return parsed.map((key, value) => Session.fromJson(value)).toList();
-}
 
+List<dynamic> parsePosts(String responseBody) {
+  final parsed = json.decode(responseBody);
+  final list = parsed
+      .map((key, value) => MapEntry(key, Session.fromJson(value)))
+      .values
+      .toList();
+  return list;
+}
 
 class SessionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-          title: new Text("Conférence"),
-        ),
-        body: FutureBuilder<List<Session>>(
+        title: new Text("Sessions"),
+      ),
+      body: FutureBuilder<List<dynamic>>(
         future: fetchPosts(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
- 
+
           return snapshot.hasData
               ? ListViewSessions(sessions: snapshot.data)
               : Center(child: CircularProgressIndicator());
@@ -40,26 +42,28 @@ class SessionPage extends StatelessWidget {
   }
 }
 
-
-
 class ListViewSessions extends StatelessWidget {
-  final List<Session> sessions;
- 
+  final List<dynamic> sessions;
+
   ListViewSessions({Key key, this.sessions}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
-        itemCount: sessions.length,
-        padding: const EdgeInsets.all(15.0),
-        itemBuilder: (context, index) {
-          return  ListTile(
-            title: Text('${sessions[index].titleMobile}'),
-          );
-        }
-      ),
-      
+          itemCount: sessions.length,
+          padding: const EdgeInsets.all(15.0),
+          itemBuilder: (context, index) {
+            return Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text('${sessions[index].title}'),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                Divider(),
+              ],
+            );
+          }),
     );
   }
 }

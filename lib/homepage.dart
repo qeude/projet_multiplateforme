@@ -13,7 +13,8 @@ class HomePage extends StatelessWidget {
               ListTile(
                 title: Text('Sessions'),
                 onTap: () {
-                  //TODO: mettre le comportement pour aller vers la page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SessionPage()));
                 },
               ),
               ListTile(
