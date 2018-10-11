@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './components/roundedbutton.dart';
-import 'sessionpage.dart';
+import 'sessionspage.dart';
+import 'speakerspage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -14,13 +15,14 @@ class HomePage extends StatelessWidget {
                 title: Text('Sessions'),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SessionPage()));
+                      MaterialPageRoute(builder: (context) => SessionsPage()));
                 },
               ),
               ListTile(
                 title: Text('Présentateurs'),
                 onTap: () {
-                  //TODO: mettre le comportement pour aller vers la page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SpeakersPage()));
                 },
               ),
             ],
@@ -63,7 +65,7 @@ class HomePage extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SessionPage()));
+                                      builder: (context) => SessionsPage()));
                             }))),
                 Container(
                     child: SizedBox(
@@ -71,7 +73,10 @@ class HomePage extends StatelessWidget {
                         child: RoundedButton(
                             text: 'Voir les présentateurs',
                             func: () {
-                              //TODO: mettre le comportement pour aller vers la page
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SpeakersPage()));
                             }))),
               ],
             )));

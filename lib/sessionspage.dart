@@ -7,13 +7,13 @@ import 'package:flutter/foundation.dart';
 import 'models/session.dart';
 import 'sessiondetailspage.dart';
 
-Future<List<dynamic>> fetchPosts(http.Client client) async {
+Future<List<dynamic>> fetchSessions(http.Client client) async {
   final response = await client
       .get('https://devfest-nantes-2018-api.cleverapps.io/sessions');
-  return compute(parsePosts, response.body);
+  return compute(parseSessions, response.body);
 }
 
-List<dynamic> parsePosts(String responseBody) {
+List<dynamic> parseSessions(String responseBody) {
   final parsed = json.decode(responseBody);
   final list = parsed
       .map((key, value) => MapEntry(key, Session.fromJson(value)))
@@ -22,7 +22,7 @@ List<dynamic> parsePosts(String responseBody) {
   return list;
 }
 
-class SessionPage extends StatelessWidget {
+class SessionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class SessionPage extends StatelessWidget {
         title: new Text("Sessions"),
       ),
       body: FutureBuilder<List<dynamic>>(
-        future: fetchPosts(http.Client()),
+        future: fetchSessions(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 
