@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './components/roundedbutton.dart';
+import 'sessionpage.dart';
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -55,20 +57,21 @@ class HomePage extends StatelessWidget {
                     child: SizedBox(
                         width: double.infinity,
                         child: RoundedButton(
-                          text: 'Voir les sessions',
-                          func: (){
-                            //TODO: mettre le comportement pour aller vers la page
-                          }
-                        ))),
+                            text: 'Voir les sessions',
+                            func: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SessionPage()));
+                            }))),
                 Container(
                     child: SizedBox(
                         width: double.infinity,
                         child: RoundedButton(
-                          text: 'Voir les présentateurs',
-                          func: (){
-                            //TODO: mettre le comportement pour aller vers la page
-                          }
-                        ))),
+                            text: 'Voir les présentateurs',
+                            func: () {
+                              //TODO: mettre le comportement pour aller vers la page
+                            }))),
               ],
             )));
   }
