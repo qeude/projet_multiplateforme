@@ -4,6 +4,7 @@ import 'globals.dart' as globals;
 import 'models/session.dart';
 import 'sessionspage.dart';
 import 'package:http/http.dart' as http;
+import 'sessiondetailspage.dart';
 
 class SpeakerDetailsPage extends StatefulWidget {
   SpeakerDetailsPage(this.currSpeaker);
@@ -27,8 +28,8 @@ class SpeakerDetailsPageState extends State<SpeakerDetailsPage> {
     
     fetchSessions(http.Client()).then((ses) {
       for(Session session in ses) {
-        for(Speaker speaker in session.speakers) {
-          if(speaker.id == widget.currSpeaker.id) {
+        for(int speaker in session.speakers) {
+          if(speaker == int.parse(widget.currSpeaker.id)) {
             sessions.add(session);
           }
         }
@@ -86,8 +87,8 @@ class SpeakerDetailsPageState extends State<SpeakerDetailsPage> {
                               title: Text('${sessions[index].title}'),
                               trailing: Icon(Icons.keyboard_arrow_right),
                               onTap: (){
-                                // Navigator.push(context,
-                                //   MaterialPageRoute(builder: (context) => SpeakerDetailsPage(speakers[index])));
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => SessionDetailsPage(sessions[index])));
                               },
                             ),
                             Divider(),
