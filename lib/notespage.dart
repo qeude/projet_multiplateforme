@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'dart:async';
-import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -11,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'globals.dart' as globals;
 import 'models/session.dart';
 import 'components/roundedbutton.dart';
-import 'camerapage.dart';
 
 class NotesPage extends StatefulWidget {
   final Session currSession;
