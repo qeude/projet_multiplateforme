@@ -15,12 +15,24 @@ Future<List<dynamic>> fetchSpeakers(http.Client client) async {
 
 List<dynamic> parseSpeakers(String responseBody) {
   final parsed = json.decode(responseBody);
-  print(parsed);
   final list = parsed
       .map((key, value) => MapEntry(key, Speaker.fromJson(value)))
       .values
       .toList();
   return list;
+}
+
+Future<Speaker> findSpeakerWithId(int id) async {
+  Speaker speaker;
+  await (fetchSpeakers(http.Client()).then((speakers) {
+    for(Speaker s in speakers) {
+      if(int.parse(s.id) == id) {
+        speaker = s;
+      }
+    }
+  }));
+
+  return speaker;
 }
 
 class SpeakersPage extends StatelessWidget {
