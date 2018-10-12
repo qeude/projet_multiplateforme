@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'notespage.dart';
 import 'models/session.dart';
+import 'components/roundedbutton.dart';
 
 class SessionDetailsPage extends StatelessWidget {
   SessionDetailsPage(this.currSession);
@@ -39,7 +42,16 @@ class SessionDetailsPage extends StatelessWidget {
                       subtitle: Text('Entrepise du présentateur'),
                       trailing: Icon(Icons.keyboard_arrow_right),
                       onTap: () {},
-                    ))
+                    )),
+                  Container(
+                    child: RoundedButton(
+                      text: "Mes notes",
+                      func: () {
+                        Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NotesPage(currSession)));
+                      }
+                    ) ,
+                  )
               ],
             )));
   }

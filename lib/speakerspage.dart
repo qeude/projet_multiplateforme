@@ -15,7 +15,6 @@ Future<List<dynamic>> fetchSpeakers(http.Client client) async {
 
 List<dynamic> parseSpeakers(String responseBody) {
   final parsed = json.decode(responseBody);
-  print(parsed);
   final list = parsed
       .map((key, value) => MapEntry(key, Speaker.fromJson(value)))
       .values
