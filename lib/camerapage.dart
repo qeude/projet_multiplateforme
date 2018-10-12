@@ -101,7 +101,6 @@ class _CameraPageState extends State<CameraPage> {
           child: new CameraPreview(controller));
     }
   }
- 
 
   Widget _captureControlRowWidget() {
     return Row(
@@ -140,7 +139,6 @@ class _CameraPageState extends State<CameraPage> {
         );
       }
     }
-
     return Row(children: toggles);
   }
 
@@ -183,6 +181,7 @@ class _CameraPageState extends State<CameraPage> {
         });
         if (filePath != null) {
           print('Picture saved to $filePath');
+          controller.dispose();
           Navigator.pop(context, filePath);
         }
       }
