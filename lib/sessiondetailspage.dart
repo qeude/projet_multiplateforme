@@ -3,6 +3,8 @@ import 'models/session.dart';
 import 'speakerspage.dart';
 import 'speakerdetailspage.dart';
 import 'models/speaker.dart';
+import 'components/roundedbutton.dart';
+import 'notespage.dart';
 
 class SessionDetailsPage extends StatefulWidget {
   SessionDetailsPage(this.currSession);
@@ -80,6 +82,10 @@ class SessionDetailsPageState extends State<SessionDetailsPage> {
                         );
                       }),
                 ),
+              Container(child: 
+              RoundedButton(text:'Mes notes', func:(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotesPage(widget.currSession)));
+              }),)
               ],
             )));
   }

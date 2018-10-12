@@ -1,7 +1,15 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+
+import 'globals.dart' as globals;
 import './homepage.dart';
 
-void main() => runApp(new MyApp());
+
+Future<Null> main() async {
+  globals.cameras = await availableCameras();
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
