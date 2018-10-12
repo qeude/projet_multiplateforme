@@ -13,6 +13,13 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: 50.0),
             children: <Widget>[
               ListTile(
+                title: Text('Accueil'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
+              ),
+              ListTile(
                 title: Text('Sessions'),
                 onTap: () {
                   Navigator.push(context,
