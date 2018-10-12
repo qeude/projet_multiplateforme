@@ -4,8 +4,9 @@ class Speaker{
   final String company;
   final String bio;
   final String shortBio;
+  final String avatar;
 
-  Speaker({this.id, this.name, this.company, this.bio, this.shortBio});
+  Speaker({this.id, this.name, this.company, this.bio, this.shortBio, this.avatar});
 
   factory Speaker.fromJson(Map<String, dynamic> json) {
     return Speaker(
@@ -14,6 +15,7 @@ class Speaker{
       company: json['company'] as String,
       bio: json['bio'] as String, 
       shortBio: json['shortBio'] as String,
+      avatar: json['photoUrl'] as String,
     );
   }
 }

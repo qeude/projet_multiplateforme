@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'models/speaker.dart';
-
+import 'globals.dart' as globals;
 class SpeakerDetailsPage extends StatelessWidget {
   SpeakerDetailsPage(this.currSpeaker);
 
@@ -23,7 +23,7 @@ class SpeakerDetailsPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: Image(image: AssetImage("assets/images/profile-pic.png"),),
+                  child: Image.network("${globals.urlDevfest}/${currSpeaker.avatar}"),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 24.0),

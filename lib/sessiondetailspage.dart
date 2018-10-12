@@ -5,7 +5,7 @@ import 'speakerdetailspage.dart';
 import 'models/speaker.dart';
 import 'components/roundedbutton.dart';
 import 'notespage.dart';
-
+import 'globals.dart' as globals;
 class SessionDetailsPage extends StatefulWidget {
   SessionDetailsPage(this.currSession);
 
@@ -64,11 +64,7 @@ class SessionDetailsPageState extends State<SessionDetailsPage> {
                           children: <Widget>[
                             ListTile(
                               contentPadding: EdgeInsets.only(top: 16.0,bottom: 16.0),
-                              leading: Image(
-                                image: AssetImage("assets/images/profile-pic.png"),
-                                height: 80.0,
-                                width: 80.0,
-                              ),
+                              leading: Image.network('${globals.urlDevfest}/${speakers[index].avatar}', height: 80.0, width: 80.0),
                               title: Text('${speakers[index].name}'),
                               subtitle: Text('${speakers[index].company}'),
                               trailing: Icon(Icons.keyboard_arrow_right),
