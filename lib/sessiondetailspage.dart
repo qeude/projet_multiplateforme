@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
-
-import 'notespage.dart';
 import 'models/session.dart';
-import 'components/roundedbutton.dart';
+import 'speakerspage.dart';
+import 'speakerdetailspage.dart';
+import 'models/speaker.dart';
 
-class SessionDetailsPage extends StatelessWidget {
+class SessionDetailsPage extends StatefulWidget {
   SessionDetailsPage(this.currSession);
 
   final Session currSession;
+
+  @override
+  SessionDetailsPageState createState() {
+    return new SessionDetailsPageState();
+  }
+}
+
+class SessionDetailsPageState extends State<SessionDetailsPage> {
+
+  Speaker speaker;
+
+  @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+   
+      findSpeakerWithId(this.widget.currSession.id).then((speaker) {
+        setState(() {
+                  this.speaker = speaker;
+                });
+      });
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +44,13 @@ class SessionDetailsPage extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    currSession.title,
+                    widget.currSession.title,
                     style: TextStyle(fontSize: 35.0),
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.only(top: 24.0),
-                  child: Text(currSession.desc),
+                  child: Text(widget.currSession.desc),
                 ),
                 Container(
                     padding: EdgeInsets.only(top: 24.0),
@@ -38,20 +61,13 @@ class SessionDetailsPage extends StatelessWidget {
                         height: 80.0,
                         width: 80.0,
                       ),
-                      title: Text('Nom du présentateur'),
-                      subtitle: Text('Entrepise du présentateur'),
+                      title: Text(this.speaker != null ? this.speaker.name : ""),
+                      subtitle: Text(this.speaker != null ? this.speaker.company : ""),
                       trailing: Icon(Icons.keyboard_arrow_right),
-                      onTap: () {},
-                    )),
-                  Container(
-                    child: RoundedButton(
-                      text: "Mes notes",
-                      func: () {
-                        Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NotesPage(currSession)));
-                      }
-                    ) ,
-                  )
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SpeakerDetailsPage(this.speaker)));
+                      },
+                    ))
               ],
             )));
   }

@@ -9,7 +9,7 @@ class Speaker{
 
   factory Speaker.fromJson(Map<String, dynamic> json) {
     return Speaker(
-      id: json['id'].toString() as String,
+      id: json['id'].toString(),
       name: json['name'] as String,
       company: json['company'] as String,
       bio: json['bio'] as String, 

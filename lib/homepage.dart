@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './components/roundedbutton.dart';
 import 'sessionspage.dart';
 import 'speakerspage.dart';
+import 'phoneinformationpage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -11,6 +12,13 @@ class HomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.only(top: 50.0),
             children: <Widget>[
+              ListTile(
+                title: Text('Accueil'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
+              ),
               ListTile(
                 title: Text('Sessions'),
                 onTap: () {
@@ -23,6 +31,13 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SpeakersPage()));
+                },
+              ),
+              ListTile(
+                title: Text('Informations'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PhoneInformationPage()));
                 },
               ),
             ],
