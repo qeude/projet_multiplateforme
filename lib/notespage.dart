@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 
 import 'globals.dart' as globals;
@@ -21,7 +23,15 @@ class NotesPage extends StatefulWidget {
 
 class _NotesPageState extends State<NotesPage> {
   final notesController = TextEditingController();
-  var imagePath;
+  var _image;
+
+  Future getImage(ImageSource source) async {
+    var image = await ImagePicker.pickImage(source: source);
+
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   void initState() {
@@ -55,7 +65,7 @@ class _NotesPageState extends State<NotesPage> {
                         color: Colors.blue,
                       ),
                       onPressed: () {
-                        _navigateCamera(context);
+                        getImage(ImageSource.camera);
                       },
                       iconSize: 60.0,
                     ),
@@ -64,7 +74,9 @@ class _NotesPageState extends State<NotesPage> {
                         Icons.photo,
                         color: Colors.blue,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        getImage(ImageSource.gallery);
+                      },
                       iconSize: 60.0,
                     )
                   ],
@@ -86,19 +98,10 @@ class _NotesPageState extends State<NotesPage> {
                     )),
                 Container(
                   padding: EdgeInsets.only(top: 24.0),
-                  child: (imagePath != null) ? Image.file(File(imagePath)): Text(""),
+                  child: (_image != null) ? Image.file(_image): Text(""),
                 )
               ],
             ))
         );
-  }
-
-  _navigateCamera(BuildContext context) async {
-    final result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CameraPage()));
-
-    setState(() {
-      imagePath = result;
-    });
   }
 }
