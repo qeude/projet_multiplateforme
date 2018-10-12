@@ -22,17 +22,21 @@ List<dynamic> parseSpeakers(String responseBody) {
   return list;
 }
 
-Future<Speaker> findSpeakerWithId(int id) async {
-  Speaker speaker;
-  await (fetchSpeakers(http.Client()).then((speakers) {
-    for(Speaker s in speakers) {
-      if(int.parse(s.id) == id) {
-        speaker = s;
+Future<List<Speaker>> findSpeakersWithIds(List<dynamic> ids) async {
+  List<Speaker> speakers = [];
+
+
+  await (fetchSpeakers(http.Client()).then((sp) {
+    for(Speaker s in sp) {
+      for(int id in ids) {
+        if (id == int.parse(s.id)) {
+          speakers.add(s);
+        }
       }
     }
   }));
 
-  return speaker;
+  return speakers;
 }
 
 class SpeakersPage extends StatelessWidget {
