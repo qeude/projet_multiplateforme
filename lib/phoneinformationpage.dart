@@ -61,12 +61,6 @@ class PhoneInformationPage extends StatelessWidget {
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
-                Container(
-                  child: Text(
-                    "Version : $connectivity",
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                ),
               ],
             )));
   }
