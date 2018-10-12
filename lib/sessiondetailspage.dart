@@ -17,17 +17,17 @@ class SessionDetailsPage extends StatefulWidget {
 
 class SessionDetailsPageState extends State<SessionDetailsPage> {
 
-  Speaker speaker;
+  List<Speaker> speakers = [];
 
   @override
     void initState() {
       // TODO: implement initState
       super.initState();
-   
-      findSpeakerWithId(this.widget.currSession.id).then((speaker) {
+        
+      findSpeakersWithIds(widget.currSession.speakers).then((speakers) {
         setState(() {
-                  this.speaker = speaker;
-                });
+          this.speakers = speakers;
+        });
       });
     }
 
@@ -53,21 +53,33 @@ class SessionDetailsPageState extends State<SessionDetailsPage> {
                   child: Text(widget.currSession.desc),
                 ),
                 Container(
-                    padding: EdgeInsets.only(top: 24.0),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.only(top: 16.0,bottom: 16.0),
-                      leading: Image(
-                        image: AssetImage("assets/images/profile-pic.png"),
-                        height: 80.0,
-                        width: 80.0,
-                      ),
-                      title: Text(this.speaker != null ? this.speaker.name : ""),
-                      subtitle: Text(this.speaker != null ? this.speaker.company : ""),
-                      trailing: Icon(Icons.keyboard_arrow_right),
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SpeakerDetailsPage(this.speaker)));
-                      },
-                    ))
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: this.speakers.length,
+                      padding: const EdgeInsets.all(15.0),
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: <Widget>[
+                            ListTile(
+                              contentPadding: EdgeInsets.only(top: 16.0,bottom: 16.0),
+                              leading: Image(
+                                image: AssetImage("assets/images/profile-pic.png"),
+                                height: 80.0,
+                                width: 80.0,
+                              ),
+                              title: Text('${speakers[index].name}'),
+                              subtitle: Text('${speakers[index].company}'),
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              onTap: (){
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => SpeakerDetailsPage(speakers[index])));
+                              },
+                            ),
+                            Divider(),
+                          ],
+                        );
+                      }),
+                ),
               ],
             )));
   }
