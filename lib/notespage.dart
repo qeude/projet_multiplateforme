@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
-
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'globals.dart' as globals;
 import 'models/session.dart';
@@ -22,7 +21,6 @@ class _NotesPageState extends State<NotesPage> {
 
   Future getImage(ImageSource source) async {
     var image = await ImagePicker.pickImage(source: source);
-
     setState(() {
       _image = image;
     });
@@ -31,7 +29,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
     super.initState();
-    print(globals.cameras);
+    _getNote();
   }
 
   @override
@@ -83,7 +81,17 @@ class _NotesPageState extends State<NotesPage> {
                   ),
                 ),
                 Container(
-                    child: RoundedButton(text: "Enregistrer", func: () {})),
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        return RoundedButton(
+                        text: "Enregistrer",
+                        func: () {
+                          _saveNote();
+                          _showToast(context);
+                        });
+                      }
+                    )
+                ),
                 Container(
                     padding: EdgeInsets.only(top: 24.0),
                     child: new TextField(
@@ -93,10 +101,32 @@ class _NotesPageState extends State<NotesPage> {
                     )),
                 Container(
                   padding: EdgeInsets.only(top: 24.0),
-                  child: (_image != null) ? Image.file(_image): Text(""),
+                  child: (_image != null) ? Image.file(_image) : Text(""),
                 )
               ],
-            ))
-        );
+            )));
+  }
+
+  _saveNote() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String currNote = notesController.text;
+    await prefs.setString("note${widget.currSession.id}", currNote);
+  }
+
+  _getNote() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String value = (prefs.getString('note${widget.currSession.id}') ?? "");
+    notesController.text = value;
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Notes sauvegardées'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
