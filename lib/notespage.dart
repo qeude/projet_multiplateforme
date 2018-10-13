@@ -1,9 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
-import 'globals.dart' as globals;
 import 'models/session.dart';
 import 'components/roundedbutton.dart';
 
@@ -19,10 +20,18 @@ class _NotesPageState extends State<NotesPage> {
   final notesController = TextEditingController();
   var _image;
 
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
   Future getImage(ImageSource source) async {
     var image = await ImagePicker.pickImage(source: source);
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+    var newImage = await image.copy('$path/imageNote${widget.currSession.id}');
     setState(() {
-      _image = image;
+      _image = newImage;
     });
   }
 
@@ -30,6 +39,7 @@ class _NotesPageState extends State<NotesPage> {
   void initState() {
     super.initState();
     _getNote();
+    _getImage();
   }
 
   @override
@@ -80,18 +90,14 @@ class _NotesPageState extends State<NotesPage> {
                     style: TextStyle(fontSize: 35.0),
                   ),
                 ),
-                Container(
-                    child: Builder(
-                      builder: (BuildContext context) {
-                        return RoundedButton(
-                        text: "Enregistrer",
-                        func: () {
-                          _saveNote();
-                          _showToast(context);
-                        });
-                      }
-                    )
-                ),
+                Container(child: Builder(builder: (BuildContext context) {
+                  return RoundedButton(
+                      text: "Enregistrer",
+                      func: () {
+                        _saveNote();
+                        _showToast(context);
+                      });
+                })),
                 Container(
                     padding: EdgeInsets.only(top: 24.0),
                     child: new TextField(
@@ -117,6 +123,16 @@ class _NotesPageState extends State<NotesPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String value = (prefs.getString('note${widget.currSession.id}') ?? "");
     notesController.text = value;
+  }
+
+  _getImage() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+    var imageExist = await File('$path/imageNote${widget.currSession.id}').exists();
+    var newImage = (imageExist) ? File('$path/imageNote${widget.currSession.id}') : null;
+    setState(() {
+      _image = newImage;
+    });
   }
 
   void _showToast(BuildContext context) {
