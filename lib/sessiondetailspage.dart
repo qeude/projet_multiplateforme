@@ -58,6 +58,7 @@ class SessionDetailsPageState extends State<SessionDetailsPage> {
                 ),
                 Container(
                   child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: this.speakers.length,
                       padding: const EdgeInsets.all(15.0),

@@ -96,6 +96,7 @@ class SpeakerDetailsPageState extends State<SpeakerDetailsPage> {
                 ),
                 Container(
                   child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: this.sessions.length,
                       padding: const EdgeInsets.all(15.0),
