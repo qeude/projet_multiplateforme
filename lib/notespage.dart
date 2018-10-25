@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'models/session.dart';
+import 'services/utils.dart' as utils;
 import 'components/roundedbutton.dart';
 
 class NotesPage extends StatefulWidget {
@@ -95,7 +96,7 @@ class _NotesPageState extends State<NotesPage> {
                       text: "Enregistrer",
                       func: () {
                         _saveNote();
-                        _showToast(context);
+                        utils.showToast(context, "Notes sauvegardées");
                       });
                 })),
                 Container(
@@ -133,16 +134,5 @@ class _NotesPageState extends State<NotesPage> {
     setState(() {
       _image = newImage;
     });
-  }
-
-  void _showToast(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: const Text('Notes sauvegardées'),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
   }
 }
