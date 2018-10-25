@@ -12,8 +12,8 @@ class Speaker{
     return Speaker(
       id: json['id'].toString(),
       name: json['name'] as String,
-      company: json['company'] as String,
-      bio: json['bio'] as String, 
+      company: (json['company'] != null) ? json['company'] as String : " ",
+      bio: json['bio'] as String,
       shortBio: json['shortBio'] as String,
       avatar: json['photoUrl'] as String,
     );
