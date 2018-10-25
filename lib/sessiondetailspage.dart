@@ -21,11 +21,13 @@ class SessionDetailsPageState extends State<SessionDetailsPage> {
 
   List<Speaker> speakers = [];
 
+
+
   @override
     void initState() {
       // TODO: implement initState
       super.initState();
-        
+              
       findSpeakersWithIds(widget.currSession.speakers).then((speakers) {
         setState(() {
           this.speakers = speakers;

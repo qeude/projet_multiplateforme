@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:contacts_service/contacts_service.dart';
+
 import 'models/speaker.dart';
 import 'globals.dart' as globals;
 import 'models/session.dart';
 import 'sessionspage.dart';
 import 'package:http/http.dart' as http;
 import 'sessiondetailspage.dart';
+import 'dart:async';
 
 class SpeakerDetailsPage extends StatefulWidget {
   SpeakerDetailsPage(this.currSpeaker);
@@ -20,11 +23,16 @@ class SpeakerDetailsPage extends StatefulWidget {
 class SpeakerDetailsPageState extends State<SpeakerDetailsPage> {
 
   List<Session> sessions = [];
-
+  Iterable<Contact> contacts;
+  _getContacts() async{
+    contacts = await ContactsService.getContacts();
+    print(contacts);
+  }
   @override
-  void initState() {
+  void initState(){
     // TODO: implement initState
     super.initState();
+    _getContacts();
     
     fetchSessions(http.Client()).then((ses) {
       for(Session session in ses) {
