@@ -2,47 +2,13 @@ import 'package:flutter/material.dart';
 import './components/roundedbutton.dart';
 import 'sessionspage.dart';
 import 'speakerspage.dart';
-import 'phoneinformationpage.dart';
+import 'components/sidemenu.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.only(top: 50.0),
-            children: <Widget>[
-              ListTile(
-                title: Text('Accueil'),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
-              ListTile(
-                title: Text('Sessions'),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SessionsPage()));
-                },
-              ),
-              ListTile(
-                title: Text('Présentateurs'),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SpeakersPage()));
-                },
-              ),
-              ListTile(
-                title: Text('Informations'),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PhoneInformationPage()));
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: SideMenu(),
         appBar: new AppBar(
           title: new Text("Conférence"),
         ),
