@@ -7,7 +7,7 @@ Projet fait dans le cadre du module "Programmation multiplateforme".
 
 ## 🔧 Installation du projet
 - `git clone https://github.com/qeude/projet_multiplateforme.git`
-- `cd projet_mutliplateforme`
+- `cd projet_multiplateforme`
 - `flutter packages get`
 - `flutter devices`
 - `flutter run -d $device` avec `$device` étant le device. (On peut ajouter une option `--release` si besoin pour de meilleures performances)
