@@ -21,11 +21,6 @@ class _NotesPageState extends State<NotesPage> {
   final notesController = TextEditingController();
   var _image;
 
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
   Future getImage(ImageSource source) async {
     var image = await ImagePicker.pickImage(source: source);
     final directory = await getApplicationDocumentsDirectory();
